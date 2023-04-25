@@ -1,17 +1,17 @@
 import requests
 import time
 import uuid
-from flask import Flask
+from flask import Flask, request 
 
 app = Flask(__name__)
 
 group_id = 77687748
 access_token = "LouHyWbKTMXk0z3nMSg2cEQRpWmABbhDWLfw2iLS"
-message = 'Hello there!'
 Last_members = {}
 
 @app.route("/")
 def send_messages():
+    message = request.args.get('message', 'Hello there!')
     response = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}")
     if response.status_code != 200:
         return f"Error fetching group members. Error code: {response.status_code}"
